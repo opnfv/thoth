@@ -1,0 +1,7 @@
+
+        [gerrit]
+        host=gerrit.opnfv.org
+        port=29418
+        project=thoth
+        defaultbranch=master
+        
