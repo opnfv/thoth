@@ -1,0 +1,46 @@
+---
+project: 'thoth'
+project_creation_date: '2021-08-03'
+project_category: 'Infrastructure'
+lifecycle_state: 'Incubation'
+project_lead: &anuket_thoth_ptl
+    name: 'Sridhar K. N. Rao'
+    email: 'sridhar.rao@spirent.com'
+    company: 'Spirent Communications'
+    id: 'sridharkn'
+    timezone: 'Asia/Kolkata'
+primary_contact: *anuket_thoth_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.anuket.io/projects/thoth'
+    key: 'thoth'
+mailing_list:
+    type: 'groups.io'
+    url: 'anuket-tech-discuss@lists.anuket.io'
+    tag: 'thoth'
+realtime_discussion:
+    type: 'slack'
+    server: 'anuketworkspace.slack.com'
+    channel: '#thoth'
+meetings:
+    - type: 'zoom'
+      agenda: 'https://wiki.anuket.io/display/HOME/Thoth-Meeting+Minutes'
+      url: 'https://zoom.us/j/96163911066'
+      repeats: 'weekly'
+      time: '13:00 UTC'
+repositories:
+    - 'thoth'
+committers:
+    - <<: *anuket_thoth_ptl
+    - name: 'Girish L'
+      email: 'girish.l@cittumkur.org'
+      company: 'VTU, Belagavi'
+      id: 'girishl'
+      timezone: 'Asia/Kolkata'
+tsc:
+    # yamllint disable rule:line-length
+    approval: 'https://wiki.anuket.io/display/HOME/2021-08-03+TSC+Agenda+and+Minutes'
+    changes:
+        - type: ''
+          link: ''
+          # yamllint enable rule:line-length
