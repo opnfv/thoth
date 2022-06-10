@@ -8,3 +8,11 @@
 *********************************
 Anuket Thoth
 *********************************
+.. toctree::
+   :numbered:
+   :maxdepth: 3
+
+   release/release-notes.rst
+   models/models.rst
+   research/studies.rst
+   tools/tools.rst
