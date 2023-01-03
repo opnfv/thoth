@@ -71,6 +71,7 @@ class AlgoSelectorWizard():
         self.gen_about_data_basic_values = {}
         self.gen_about_data_adv_values = {}
         self.gen_about_data_output_values = {}
+        self.gans_values = {}
         # Set of Wizards.
         self.wiz_main = None
         self.wiz_main_l1 = None
@@ -90,8 +91,10 @@ class AlgoSelectorWizard():
         self.wiz_generic_data_output = None
         self.wiz_unsupervised = None
         self.wiz_reinforcement = None
+        self.wiz_gans = None
         # Some Inferences
         self.ml_needed = False
+        self.ml_gans = False
         self.supervised = False
         self.unsupervised = False
         self.reinforcement = False
@@ -126,6 +129,39 @@ class AlgoSelectorWizard():
                 ),
             )
         )
+    
+    def gans_wizard(self):
+        """
+        The GANs Wizard
+        """
+        self.wiz_gans = wiz.PromptWizard(
+            name=Bcolors.OKBLUE+"Synthetic Data Genration using GANs"+Bcolors.ENDC,
+            description="",
+            steps=(
+                # The list of input prompts to ask the user.
+                wiz.WizardStep(
+                    # ID where the value will be stored
+                    id="gans_data_type",
+                    # Display name
+                    name=Bcolors.HEADER+"Is the sample data you have is time-series? Answer Y/N - Yes/No"+Bcolors.ENDC,
+                    # Help message
+                    help="Y/N - Yes/No",
+                    validators=(wiz.required_validator, wiz.boolean_validator),
+                    default='Y',
+                ),
+                wiz.WizardStep(
+                    # ID where the value will be stored
+                    id="gans_data_variables",
+                    # Display name
+                    name=Bcolors.HEADER+"Is the sample data you have is multi-variate (more than one features/columns) ? Answer Y/N - Yes/No"+Bcolors.ENDC,
+                    # Help message
+                    help="Y/N - Yes/No",
+                    validators=(wiz.required_validator, wiz.boolean_validator),
+                    default='Y',
+                ),
+            )
+        )
+
 
     def main_wizard_l2_a(self):
         """
@@ -153,12 +189,23 @@ class AlgoSelectorWizard():
         """
         The Main Wizard L2-B
         """
+        gan = """ Synthetic data generation is an important use-case for Telco-scenarios, due to difficulty in getting good dataset."""
         label = """ One or more meaningful and informative 'tag' to provide context so that a machine learning model can learn from it. For example, labels might indicate whether a photo contains a bird or car, which words were uttered in an audio recording, or if an x-ray contains a tumor. Data labeling is required for a variety of use cases including computer vision, natural language processing, and speech recognition."""
         self.wiz_main_l2_b = wiz.PromptWizard(
             name=Bcolors.OKBLUE+"Do you Need ML - Data Programmability"+Bcolors.ENDC,
             description="",
             steps=(
                 # The list of input prompts to ask the user.
+                wiz.WizardStep(
+                    # ID where the value will be stored
+                    id="data_generation",
+                    # Display name
+                    name=Bcolors.HEADER+" Do you want to generate Synthetic Data from the existing data (Type Y/N - Yes/No). Type helfp for the description"+Bcolors.ENDC,
+                    # Help message
+                    help=gan,
+                    validators=(wiz.required_validator, wiz.boolean_validator),
+                    default='N',
+                ),
                 wiz.WizardStep(
                     # ID where the value will be stored
                     id="data_label",
@@ -764,6 +811,10 @@ class AlgoSelectorWizard():
                 self.unsupervised = True
             if self.main_l2b_values['data_programmability']:
                 print(Bcolors.FAIL+"ML is not required - Please consider alternate approaches\n"+Bcolors.ENDC)
+            elif self.main_l2b_values['data_generation']:
+                print(Bcolors.OKGREEN+"Looks like you need ML, let's continue"+Bcolors.ENDC)
+                self.ml_needed = True
+                self.ml_gans = True
             else:
                 self.main_wizard_l3()
                 self.main_l3_values = self.wiz_main_l3.run(self.shell)
@@ -787,6 +838,23 @@ class AlgoSelectorWizard():
                 self.reinforcement = True
             else:
                 print(Bcolors.FAIL+"ML is not required - Please consider alternate approaches\n"+Bcolors.ENDC)
+    
+    def run_gans_wizard(self):
+        """
+        Run GANs wizard
+        """
+        self.gans_wizard()
+        self.gans_values = self.wiz_gans.run(self.shell)
+        if self.gans_values['gans_data_type']:
+            if self.gans_values['gans_data_variables']:
+                print("GANs technique to consider: TTS-GAN")
+            else:
+                print("GANs technique to consider: TimeGAN")
+        else:
+            print("Sorry. We need to discuss, please connect with Anuket Thoth Project <srao@linuxfoundation.org>")
+                
+
+
 
     def run_generic_wizard(self):
         """
@@ -900,7 +968,7 @@ class AlgoSelectorWizard():
             else:
                 print("Unsupervised Learning model to consider: PCA")
         else:
-            print("Sorry. We need to discuss, please connect with Anuket Thoth Project <sridhar.rao@spirent.com>")
+            print("Sorry. We need to discuss, please connect with Anuket Thoth Project <srao@linuxfoundation.org>")
 
     def decide_reinforcement(self):
         """
@@ -1016,13 +1084,16 @@ class AlgoSelectorWizard():
                     print("Supervised Learning model to consider - KNN")
         else:
             # Default
-            print("Sorry. We need to discuss, please connect with Anuket Thoth Project <sridhar.rao@spirent.com>")
+            print("Sorry. We need to discuss, please connect with Anuket Thoth Project <srao@linuxfoundation.org>")
 
     def ask_and_decide(self):
         """
         THe Main Engine
         """
         self.run_mainwiz()
+        if self.ml_gans:
+            self.run_gans_wizard()
+            return
         if self.ml_needed:
             self.run_generic_wizard()
             if self.supervised:
