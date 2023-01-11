@@ -3,6 +3,15 @@
 .. (c) Anuket, The Linux Foundation, BIT Mesra, VTU and Others.
 
 
+Anuket Nile Release
+===================
+
+* Tools
+
+  * Timeseries data-analysis tool added.
+  * Update to Model Selector: GANs included.
+
+
 Anuket Moselle Release
 ======================
 
