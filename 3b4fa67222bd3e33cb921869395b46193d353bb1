@@ -1,0 +1,7 @@
+Verified+1: jenkins-ci <jenkins-opnfv-ci@opnfv.org>
+Code-Review+2: Sridhar Rao <srao@linuxfoundation.org>
+Submitted-by: Sridhar Rao <srao@linuxfoundation.org>
+Submitted-at: Wed, 11 Jan 2023 13:25:04 +0000
+Reviewed-on: https://gerrit.opnfv.org/gerrit/c/thoth/+/73804
+Project: thoth
+Branch: refs/heads/master
