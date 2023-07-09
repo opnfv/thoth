@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3a8846a_fb67d5ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2747
+      },
+      "writtenOn": "2023-07-09T14:55:19Z",
+      "side": 1,
+      "message": "Please remove .vscode/settings.json file.",
+      "revId": "e2965a16f1833cb119b177a2be7985d082cc97d1",
+      "serverId": "bbac25d2-bf60-4904-9ba8-a72fc000d6c5"
+    }
+  ]
+}
